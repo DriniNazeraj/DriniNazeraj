@@ -1,0 +1,90 @@
+{
+  "fetched_at": "2026-09-25T20:12:55Z",
+  "user": {
+    "login": "DriniNazeraj",
+    "name": null,
+    "public_repos": 29,
+    "followers": 1,
+    "following": 3,
+    "created_at": "2025-02-17T19:00:35Z",
+    "avatar_url": "https://avatars.githubusercontent.com/u/199660693?v=4"
+  },
+  "stars": 0,
+  "contributions_1y": 274,
+  "current_streak": 1,
+  "longest_streak": 6,
+  "views": {
+    "count": 0,
+    "source": "komarev",
+    "stale": false
+  },
+  "languages": [
+    {
+      "name": "TypeScript",
+      "bytes": 1495971,
+      "percent": 77.5
+    },
+    {
+      "name": "C",
+      "bytes": 224595,
+      "percent": 11.6
+    },
+    {
+      "name": "CSS",
+      "bytes": 97616,
+      "percent": 5.1
+    },
+    {
+      "name": "Python",
+      "bytes": 77342,
+      "percent": 4.0
+    },
+    {
+      "name": "HTML",
+      "bytes": 17700,
+      "percent": 0.9
+    },
+    {
+      "name": "Shell",
+      "bytes": 5792,
+      "percent": 0.3
+    },
+    {
+      "name": "Makefile",
+      "bytes": 4465,
+      "percent": 0.2
+    },
+    {
+      "name": "JavaScript",
+      "bytes": 4408,
+      "percent": 0.2
+    },
+    {
+      "name": "Dockerfile",
+      "bytes": 2955,
+      "percent": 0.2
+    }
+  ],
+  "activity": [
+    {
+      "name": "Web apps",
+      "bytes": 874242,
+      "percent": 45.3
+    },
+    {
+      "name": "WhatsApp API",
+      "bytes": 731059,
+      "percent": 37.9
+    },
+    {
+      "name": "C",
+      "bytes": 229060,
+      "percent": 11.9
+    },
+    {
+      "name": "Python",
+      "bytes": 87844,
+      "percent": 4.5
+    }
+  ]
+}
