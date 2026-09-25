@@ -1,0 +1,32 @@
+[
+  {
+    "repo": "Logistic-Company",
+    "stack": "TanStack Start · React · Tailwind · Docker",
+    "blurb": "Transport Square ops app: cargos, warehouses, package tracking, and an editable landing page (USA to Albania)."
+  },
+  {
+    "repo": "prive-travel",
+    "stack": "React · Vite · Tailwind",
+    "blurb": "Bilingual site (English and Albanian) for Privé Travel: itineraries, consulting, and mentoring pages."
+  },
+  {
+    "repo": "Scraper-GYG-TripAdvisor",
+    "stack": "Python · Selenium · BeautifulSoup",
+    "blurb": "Searches GetYourGuide and TripAdvisor in parallel, then writes an HTML showcase of the results."
+  },
+  {
+    "repo": "Common-Core---Push_Swap",
+    "stack": "C",
+    "blurb": "Sorts integers with two stacks. Published with Libft, Printf, and GetNextLine in a Common Core-style C set."
+  },
+  {
+    "repo": "whatsApp-comment",
+    "stack": "NestJS · React · Vite · Docker",
+    "blurb": "WhatsApp API gateway based on OpenWA, with session error handling and a QR countdown on the dashboard."
+  },
+  {
+    "repo": "architectural-vision",
+    "stack": "React · Vite · Tailwind",
+    "blurb": "Studio landing page, “Architecture Beyond Limits,” with a fading hero slideshow."
+  }
+]

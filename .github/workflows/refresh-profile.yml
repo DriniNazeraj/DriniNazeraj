@@ -1,0 +1,48 @@
+name: Refresh profile assets
+
+on:
+  schedule:
+    # Once a day, after the contribution calendar has rolled over.
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "assets/profile.json"
+      - "assets/projects.json"
+      - "scripts/**"
+      - ".github/workflows/refresh-profile.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-profile-assets
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install renderer dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Redraw SVG assets from the public GitHub API
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/generate.py
+
+      - name: Commit updated assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/*.svg assets/stats.json
+          git diff --staged --quiet && exit 0
+          git commit -m "chore: refresh profile SVG assets"
+          git push

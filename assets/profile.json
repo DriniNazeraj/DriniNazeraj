@@ -1,0 +1,38 @@
+{
+  "login": "DriniNazeraj",
+  "lines": [
+    {"key": "Subject", "value": "Drini"},
+    {"key": "Role", "value": "Full-stack developer\n(front end + back end)"},
+    {"key": "Status", "value": "Building in public"},
+    {"key": "Core.Lang", "value": "TypeScript"},
+    {"key": "Core.Frontend", "value": "React · Vite · Tailwind"},
+    {"key": "Core.Backend", "value": "Node · NestJS · Python · C"},
+    {"key": "Core.Tools", "value": "Git · Docker · TanStack"},
+    {"key": "Grid.GitHub", "value": "DriniNazeraj"}
+  ],
+  "taglines": [
+    "Drini — Full-stack developer",
+    "Front end + back end",
+    "TypeScript · React · Node.js · NestJS"
+  ],
+  "marquee_items": [
+    "TYPESCRIPT",
+    "REACT",
+    "VITE",
+    "NEXT.JS",
+    "TAILWIND",
+    "TANSTACK",
+    "NODE",
+    "NESTJS",
+    "PYTHON",
+    "C",
+    "DOCKER",
+    "GIT"
+  ],
+  "_placeholders_not_rendered": {
+    "note": "These are not drawn. To show one, copy it into lines. Then uncomment the matching button in README.md.",
+    "Origin": "City, Country",
+    "Grid.LinkedIn": "your-linkedin-handle",
+    "Grid.Instagram": "your-instagram-handle"
+  }
+}
