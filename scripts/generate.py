@@ -576,50 +576,84 @@ def marquee_svg(profile: dict, public_repos: int) -> str:
     return svg_doc(W, height, body, "Stack marquee", "Scrolling list of technologies found in the public repositories.")
 
 
+def _typing_frames(phrases: list[str]) -> list[tuple[str, float]]:
+    """(text, seconds). The first frame is the full title and stays up long enough to read."""
+    frames: list[tuple[str, float]] = [(phrases[0], 5.0)]
+    for index, phrase in enumerate(phrases):
+        if index == 0:
+            continue
+        step = 2 if len(phrase) > 18 else 1
+        sizes = list(range(step, len(phrase) + 1, step))
+        if not sizes or sizes[-1] != len(phrase):
+            sizes.append(len(phrase))
+        for size in sizes:
+            frames.append((phrase[:size] + "▌", 0.14))
+        frames.append((phrase, 2.4))
+    # Type the title again so the loop joins the opening hold instead of jumping.
+    phrase = phrases[0]
+    step = 2 if len(phrase) > 18 else 1
+    sizes = list(range(step, len(phrase) + 1, step))
+    if sizes and sizes[-1] == len(phrase):
+        sizes = sizes[:-1]
+    for size in sizes:
+        frames.append((phrase[:size] + "▌", 0.14))
+    return frames
+
+
+def _opacity_animation(index: int, start: float, end: float, last: bool) -> tuple[str, str]:
+    """Discrete opacity that is 1 only on [start, end).
+
+    The off key has to sit at `end`. Putting the second 1 at the end of the
+    slot and the 0 at t=1 holds every finished frame visible for the rest of
+    the loop, which stacks the lines on top of each other.
+    """
+    if index == 0:
+        values = "1;0;0"
+        times = [0.0, end, 1.0]
+    elif last:
+        values = "0;1;1"
+        times = [0.0, start, 1.0]
+    else:
+        values = "0;1;0;0"
+        times = [0.0, start, end, 1.0]
+    rounded = [round(tick, 4) for tick in times]
+    rounded[0] = 0.0
+    rounded[-1] = 1.0
+    for cursor in range(1, len(rounded)):
+        if rounded[cursor] <= rounded[cursor - 1]:
+            rounded[cursor] = min(1.0, round(rounded[cursor - 1] + 0.0001, 4))
+    rounded[-1] = 1.0
+    if any(rounded[cursor] <= rounded[cursor - 1] for cursor in range(1, len(rounded))):
+        raise SystemExit(f"typing keyTimes are not increasing: {rounded}")
+    return values, ";".join(f"{tick:.4f}" for tick in rounded)
+
+
 def typing_svg(profile: dict) -> str:
     phrases = profile["taglines"]
     width, height = 860, 64
-    frames: list[str] = []
-    # The first frame is the full title so a viewer that does not animate still reads it.
-    frames.extend([phrases[0] + "▌", phrases[0], phrases[0] + "▌"])
-    for phrase_index, phrase in enumerate(phrases):
-        if phrase_index == 0:
-            continue
-        step = 2 if len(phrase) > 18 else 1
-        for size in range(step, len(phrase) + 1, step):
-            frames.append(phrase[:size] + "▌")
-        frames.extend([phrase, phrase + "▌", phrase])
-    step = 2 if len(phrases[0]) > 18 else 1
-    for size in range(step, len(phrases[0]) + 1, step):
-        frames.append(phrases[0][:size] + "▌")
-    count = len(frames)
-    duration = max(10, count * 0.16)
-    texts = []
-    for index, frame in enumerate(frames):
-        start = index / count
-        end = (index + 1) / count
-        eps = 0.5 / count
-        if index == 0:
-            values = "1;1;0;0"
-            times = [0, end, min(0.999, end + eps), 1]
-        elif index == count - 1:
-            values = "0;0;1;1"
-            times = [0, start, min(0.999, start + eps), 1]
-        else:
-            values = "0;0;1;1;0"
-            times = [0, start, start + eps, end, 1]
-        if any(times[i] >= times[i + 1] for i in range(len(times) - 1)):
-            raise SystemExit(f"typing keyTimes are not increasing: {times}")
-        key_times = ";".join(f"{tick:.4f}" for tick in times)
-        texts.append(
-            f'<text x="{width / 2}" y="42" text-anchor="middle" opacity="{"1" if index == 0 else "0"}" fill="{PURPLE}" '
-            f'font-family="{FONT}" font-size="28" font-weight="700">{esc(frame)}'
+    frames = _typing_frames(phrases)
+    duration = sum(seconds for _text, seconds in frames)
+    groups = []
+    cursor = 0.0
+    for index, (text, seconds) in enumerate(frames):
+        start = cursor / duration
+        cursor += seconds
+        end = cursor / duration
+        last = index == len(frames) - 1
+        values, key_times = _opacity_animation(index, start, end if not last else 1.0, last)
+        # Base opacity is the still frame: the full title, everything else hidden.
+        # Renderers that skip SMIL keep that, so a screenshot still reads cleanly.
+        opacity = "1" if index == 0 else "0"
+        groups.append(
+            f'<g opacity="{opacity}">'
             f'<animate attributeName="opacity" values="{values}" keyTimes="{key_times}" '
             f'dur="{duration:.2f}s" repeatCount="indefinite" calcMode="discrete"/>'
-            f"</text>"
+            f'<text x="{width / 2}" y="42" text-anchor="middle" fill="{PURPLE}" '
+            f'font-family="{FONT}" font-size="28" font-weight="700">{esc(text)}</text>'
+            f"</g>"
         )
-    body = f'<rect width="{width}" height="{height}" fill="{BG}"/>' + "".join(texts)
-    return svg_doc(width, height, body, "Drini — Front-end developer", "Typing line with the role and the public stack.")
+    body = f'<rect width="{width}" height="{height}" fill="{BG}"/>' + "".join(groups)
+    return svg_doc(width, height, body, phrases[0], "Typing line with the role and the public stack.")
 
 
 def button_svg(label: str, fill: str, stroke: str, glyph: str, text_fill: str = "#FFFFFF") -> str:
