@@ -481,8 +481,11 @@ def header_svg(profile: dict, avatar: bytes) -> str:
         y = top + index * gap
         rows.append(
             f'<text x="596" y="{y}" fill="{MUTED}" font-family="{FONT}" font-size="13">{esc(line["key"])}</text>'
-            f'<text x="760" y="{y}" fill="{GREEN}" font-family="{FONT}" font-size="15">{esc(line["value"])}</text>'
         )
+        for offset, part in enumerate(str(line["value"]).split("\n")):
+            rows.append(
+                f'<text x="760" y="{y + offset * 18}" fill="{GREEN}" font-family="{FONT}" font-size="15">{esc(part)}</text>'
+            )
 
     height = 640
     body = f"""
@@ -542,7 +545,7 @@ def header_svg(profile: dict, avatar: bytes) -> str:
         height,
         body,
         "profile.sh --live",
-        "Terminal card for Drini, a front-end developer. The visual map cycles an avatar, a sphere, and brackets.",
+        "Terminal card for Drini, a full-stack developer. The visual map cycles an avatar, a sphere, and brackets.",
     )
 
 

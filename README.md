@@ -14,7 +14,7 @@
 
 <div align="center">
 
-<img src="assets/header.svg" width="100%" alt="profile.sh --live. Drini, front-end developer. The visual map cycles the GitHub avatar, a dotted sphere, and spinning brackets.">
+<img src="assets/header.svg" width="100%" alt="profile.sh --live. Drini, full-stack developer, front end and back end. The visual map cycles the GitHub avatar, a dotted sphere, and spinning brackets.">
 
 <br>
 
@@ -23,7 +23,7 @@
 <br>
 
 <a href="https://github.com/DriniNazeraj">
-  <img src="assets/typing.svg" width="78%" alt="Drini — Front-end developer">
+  <img src="assets/typing.svg" width="78%" alt="Drini — Full-stack developer">
 </a>
 
 <br>
@@ -52,7 +52,7 @@
 
 ## About
 
-Hi, I'm **Drini**. I build front-end interfaces with TypeScript, React, Vite, and Tailwind, and I keep the work in public repos.
+Hi, I'm **Drini**. I build both the front end and the back end of web apps with TypeScript, React, Node.js, and NestJS, and I keep the work in public repos.
 
 - Most of my commits are on **[Logistic-Company](https://github.com/DriniNazeraj/Logistic-Company)**, a TanStack Start app for cargos, warehouses, and package tracking (Transport Square, USA to Albania).
 - **[prive-travel](https://github.com/DriniNazeraj/prive-travel)** is a bilingual React site, English and Albanian, for Privé Travel: itineraries, consulting, and mentoring pages.
